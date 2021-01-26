@@ -13,7 +13,10 @@
 <script>
 export default {
   props: {
-    color: String
+    color: {
+      type: String,
+      default: ''
+    }
   },
   methods: {
     colorScheme () {

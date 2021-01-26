@@ -1,5 +1,5 @@
 <template>
-  <div id="preloader" class="animate-bounce">
+  <div id="preloader" class="animate-pulse">
     <Logo />
   </div>
 </template>

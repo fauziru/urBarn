@@ -1,21 +1,44 @@
 <template>
   <div>
-    <Navbar />
-    <div id="content">
-      <Nuxt />
-    </div>
-    <Footer />
+    <client-only>
+      <Mobile v-if="isMobile" />
+      <Desktop v-if="!isMobile" />
+      <Preloader slot="placeholder" />
+    </client-only>
   </div>
 </template>
 
 <script>
-import Navbar from './navbar'
-import Footer from './footer'
+import { mapState, mapMutations } from 'vuex'
+import Desktop from './desktop'
+import Mobile from './mobile'
 
 export default {
   components: {
-    Navbar,
-    Footer
+    Desktop,
+    Mobile
+  },
+  computed: {
+    ...mapState([
+      'isMobile'
+    ])
+  },
+  beforeDestroy () {
+    if (typeof window === 'undefined') {
+      return window.removeEventListener('resize', this.onResize, { passive: true })
+    }
+  },
+  mounted () {
+    this.onResize()
+    window.addEventListener('resize', this.onResize, { passive: true })
+  },
+  methods: {
+    ...mapMutations([
+      'setisMobile'
+    ]),
+    onResize () {
+      this.setisMobile(window.innerWidth < 600)
+    }
   }
 }
 </script>
@@ -48,7 +71,7 @@ html {
 }
 
 #content {
-  padding-top: 72px;
+  @apply pt-24;
   min-height: calc(100vh - 23.4rem);
 }
 </style>

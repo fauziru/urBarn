@@ -1,39 +1,104 @@
 <template>
   <div>
     <Wrapper>
-      <div class="p-5">
-        <div class="rounded-2xl">
-          <splide :options="options">
+      <div class="rounded-2xl -mt-10 md:px-5">
+        <!-- in Desktop -->
+        <client-only v-if="!isMobile">
+          <splide class="slide-desktop" :options="optionsDesktop">
             <splide-slide>
-              <img class="rounded-2xl" src="https://dummyimage.com/1224x400/000/fff" />
+              <img class="rounded-2xl" src="https://dummyimage.com/1280x400/000/fff">
             </splide-slide>
             <splide-slide>
-              <img class="rounded-2xl" src="https://dummyimage.com/1224x400/000/fff" />
+              <img class="rounded-2xl" src="https://dummyimage.com/1280x400/000/fff">
             </splide-slide>
             <splide-slide>
-              <img class="rounded-2xl" src="https://dummyimage.com/1224x400/000/fff" />
+              <img class="rounded-2xl" src="https://dummyimage.com/1280x400/000/fff">
             </splide-slide>
+            <template v-slot:controls>
+              <div class="splide__progress">
+                <div class="splide__progress__bar" />
+              </div>
+            </template>
           </splide>
-        </div>
+          <Preloader slot="placeholder" />
+        </client-only>
+
+        <!-- in Mobile -->
+        <client-only v-if="isMobile">
+          <splide class="slide-mobile" :options="optionsMobile">
+            <splide-slide>
+              <img class="rounded-2xl" src="https://dummyimage.com/600x300/000/fff">
+            </splide-slide>
+            <splide-slide>
+              <img class="rounded-2xl" src="https://dummyimage.com/600x300/000/fff">
+            </splide-slide>
+            <splide-slide>
+              <img class="rounded-2xl" src="https://dummyimage.com/600x300/000/fff">
+            </splide-slide>
+            <template v-slot:controls>
+              <div class="splide__progress">
+                <div class="splide__progress__bar" />
+              </div>
+            </template>
+          </splide>
+          <Preloader slot="placeholder" />
+        </client-only>
       </div>
     </Wrapper>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   data () {
     return {
-      options: {
+      optionsDesktop: {
         type: 'loop',
+        isNavigation: true,
+        focus: 'center',
         rewind: true,
         gap: '1rem',
+        autoplay: true,
+        pauseOnHover: false,
+        arrows: 'slider',
         padding: {
           right: '7rem',
           left: '7rem'
         }
+      },
+      optionsMobile: {
+        type: 'slide',
+        rewind: true,
+        arrows: false,
+        pagination: true
+      },
+      prop: {
+        hasBack: false
       }
     }
+  },
+  computed: {
+    ...mapState([
+      'isMobile'
+    ])
+  },
+  mounted () {
+  },
+  methods: {
+    ...mapActions([
+      'renderTopNav'
+    ])
   }
 }
 </script>
+
+<style scoped>
+  .slide-mobile {
+    padding: 0!important;
+  }
+  .slide-desktop {
+    padding: 0!important;
+  }
+</style>
