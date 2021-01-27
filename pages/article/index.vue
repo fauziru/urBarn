@@ -6,6 +6,17 @@
 
 <script>
 export default {
+  async fetch () {
+    await this.$store.dispatch('renderTopNav', this.topNavbar)
+  },
+  asyncData (context) {
+    return {
+      topNavbar: {
+        hasBack: true,
+        hasTitle: 'Artikel'
+      }
+    }
+  },
   head () {
     return {
       title: 'Artikel - urBarn'

@@ -5,23 +5,19 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 export default {
   middlware: 'guest',
-  data () {
+  async fetch () {
+    await this.$store.dispatch('renderTopNav', this.topNavbar)
+  },
+  asyncData (context) {
     return {
-      topNav: {
-        hasBack: true
+      topNavbar: {
+        hasBack: true,
+        hasTitle: 'Masuk'
       }
     }
   },
-  created () {
-    // this.renderTopNav(this.topNav)
-  },
-  methods: {
-    ...mapActions([
-      'renderTopNav'
-    ])
-  }
+  transitions: 'fade'
 }
 </script>

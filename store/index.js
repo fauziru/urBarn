@@ -5,13 +5,16 @@ export const plugins = [createLogger()]
 // state
 export const state = () => ({
   isMobile: false,
-  hasBack: false
+  topNavbar: {
+    hasBack: false,
+    hasTitle: ''
+  }
 })
 
 // actions
 export const actions = {
-  renderTopNav ({commit}, data) {
-    commit(sethasBack, data.hasBack)
+  async renderTopNav ({commit}, data) {
+    commit('setTopNavbar', data)
   }
 }
 
@@ -20,7 +23,7 @@ export const mutations = {
   setisMobile (state, bool) {
     state.isMobile = bool
   },
-  sethasBack (state, bool) {
-    state.hasBack = bool
+  setTopNavbar (state, payload) {
+    state.topNavbar = payload
   }
 }

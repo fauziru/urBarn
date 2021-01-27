@@ -49,9 +49,19 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
+  async fetch () {
+    await this.$store.dispatch('renderTopNav', this.topNavbar)
+  },
+  asyncData (context) {
+    return {
+      topNavbar: {
+        hasBack: false
+      }
+    }
+  },
   data () {
     return {
       optionsDesktop: {
@@ -73,22 +83,12 @@ export default {
         rewind: true,
         arrows: false,
         pagination: true
-      },
-      prop: {
-        hasBack: false
       }
     }
   },
   computed: {
     ...mapState([
       'isMobile'
-    ])
-  },
-  mounted () {
-  },
-  methods: {
-    ...mapActions([
-      'renderTopNav'
     ])
   }
 }
