@@ -74,16 +74,20 @@
             </client-only>
           </nav>
           <Brand class="order-first lg:order-none lg:w-1/5 hidden md:flex lg:items-center lg:justify-center" />
-          <div class="lg:w-2/5 inline-flex lg:justify-end md:ml-5 lg:ml-0 space-x-3">
-            {{ username }}
-            <mybutton color="primary" @click="modalLogin = !modalLogin">
+          <div v-if="!access_token" class="lg:w-2/5 inline-flex lg:justify-end md:ml-5 lg:ml-0 space-x-3">
+            <navbar-button color="primary" @click="modalLogin = !modalLogin">
               Masuk
               <i class="fas fa-sign-in-alt ml-2 group-hover:text-green-500" />
-            </mybutton>
-            <mybutton color="secondary">
+            </navbar-button>
+            <navbar-button color="secondary">
               Daftar
               <i class="fas fa-user-plus ml-2 group-hover:text-green-500" />
-            </mybutton>
+            </navbar-button>
+          </div>
+          <div v-if="access_token" class="lg:w-2/5 inline-flex lg:justify-end md:ml-5 lg:ml-0 space-x-3">
+            <button-icon icon="fa-shopping-cart fa-lg" />
+            <button-icon icon="fa-heart fa-lg" />
+            <button-icon icon="fa-bell fa-lg" />
           </div>
         </div>
       </Wrapper>
@@ -92,12 +96,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import mybutton from '../components/_partials/Button'
+import { mapState } from 'vuex'
+import Button from '../components/_partials/Button'
+import ButtonIcon from '../components/topbar/ButtonIcon'
 
 export default {
   components: {
-    mybutton
+    'navbar-button': Button,
+    'button-icon': ButtonIcon
   },
   data () {
     return {
@@ -106,19 +112,20 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', [
-      'username'
+    ...mapState('auth', [
+      'access_token',
+      'email_adress'
     ])
+  },
+  watch: {
+    $route (to, from) {
+      this.modalLogin = false
+      this.openMenu = false
+    }
   },
   updated () {
   },
   methods: {
-    ...mapActions('user', [
-      'storeLogin'
-    ]),
-    getLogin () {
-      this.storeLogin()
-    },
     toggle () {
       this.openMenu = !this.openMenu
     }

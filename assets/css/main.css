@@ -1,0 +1,19 @@
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+.slideBottom-leave-active,
+.slideBottom-enter-active {
+  transition: 0.3s;
+}
+.slideBottom-enter {
+  transform: translate(0, 100%);
+}
+.slideBottom-leave-to {
+  transform: translate(0, 100%);
+}

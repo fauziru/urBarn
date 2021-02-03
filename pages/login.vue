@@ -6,18 +6,28 @@
 
 <script>
 export default {
-  middlware: 'guest',
+  middleware: 'guest',
   async fetch () {
-    await this.$store.dispatch('renderTopNav', this.topNavbar)
+    await this.$store.dispatch('renderLayout', this.layout)
   },
   asyncData (context) {
     return {
-      topNavbar: {
-        hasBack: true,
-        hasTitle: 'Masuk'
+      layout: {
+        topNavbar: {
+          hasBack: true,
+          hasTitle: 'Masuk'
+        },
+        footer: false
       }
     }
   },
-  transitions: 'fade'
+  transition: {
+    name: 'slideBottom'
+  },
+  head () {
+    return {
+      title: 'Masuk - urBarn'
+    }
+  }
 }
 </script>

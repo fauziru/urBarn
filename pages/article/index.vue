@@ -7,13 +7,16 @@
 <script>
 export default {
   async fetch () {
-    await this.$store.dispatch('renderTopNav', this.topNavbar)
+    await this.$store.dispatch('renderLayout', this.layout)
   },
   asyncData (context) {
     return {
-      topNavbar: {
-        hasBack: true,
-        hasTitle: 'Artikel'
+      layout: {
+        topNavbar: {
+          hasBack: true,
+          hasTitle: 'Artikel'
+        },
+        footer: true
       }
     }
   },

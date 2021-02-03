@@ -19,22 +19,6 @@ export default {
     Footer,
     Navbar,
     BottomBar
-  },
-  data () {
-    return {
-      hasBack: false
-    }
-  },
-  watch: {
-    $route: 'routeChanged'
-  },
-  created () {
-    this.routeChanged()
-  },
-  methods: {
-    routeChanged () {
-      this.hasBack = (this.$route.path === '/article')
-    }
   }
 }
 </script>

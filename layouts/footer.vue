@@ -1,5 +1,5 @@
 <template>
-  <div id="footer">
+  <div v-if="footer == null ? true : false" id="footer">
     <footer class="text-gray-600 body-font border-gray-100 border-solid border-t-2">
       <wrapper>
         <div class="px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
@@ -182,6 +182,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import wrapper from '../components/_partials/Wrapper'
 export default {
   components: {
@@ -191,6 +192,11 @@ export default {
     return {
       year: new Date().getFullYear()
     }
+  },
+  computed: {
+    ...mapState({
+      footer: state => state.layout.footer
+    })
   }
 }
 </script>
